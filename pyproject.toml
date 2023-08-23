@@ -11,6 +11,27 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gradunwarp"
-version = "1.2.1+HCP"
+version = "v1.2.2.dev"
 description = "HCP version of Gradient Unwarping Package for Python/Numpy"
 authors = [{name = "Human Connectome Project"}]
+
+[tool.bumpver]
+current_version = "v1.2.2.dev"
+version_pattern = "vMAJOR.MINOR.PATCH[.TAG]"
+commit_message = "bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = ""
+post_commit_hook = ""
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    '^version = "{version}"',
+    '^current_version = "{version}"',
+]
+"version.txt" = [
+    "^{version}",
+]
