@@ -38,7 +38,7 @@ jobs:
           channels: https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/,conda-forge
           environment-file: .github/test-env.yml
       - name: Update pip and pytest
-        run: python -m pip install --upgrade pip pytest
+        run: python -m pip install --upgrade pip pytest pytest-cov
       - name: Install requires
         run: |
           python -m pip install -r ${{ matrix.requires }}
@@ -47,5 +47,4 @@ jobs:
         run: |
           python -m pip install .
       - name: Test
-        run: pytest --pyargs gradunwarp
-        working-directory: /tmp
+        run: pytest --cov gradunwarp
