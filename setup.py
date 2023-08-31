@@ -8,6 +8,7 @@ mods = ['gradunwarp.core.coeffs', 'gradunwarp.core.globals',
         'gradunwarp.core.unwarp_resample',
         'gradunwarp.core.gradient_unwarp',
         'gradunwarp.core.tests.test_utils',
+        'gradunwarp.core.tests.test_gradient_unwarp',
        ]
 
 dats = [('gradunwarp/core/', ['gradunwarp/core/interp3_ext.c']),
