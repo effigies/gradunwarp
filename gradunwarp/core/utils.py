@@ -62,7 +62,7 @@ def get_vol_affine(infile):
         raise ImportError('gradunwarp needs nibabel for I/O of mgz/nifti files.'
                           ' Please install')
     nibimage = nib.load(infile)
-    return nibimage.get_data(), nibimage.affine
+    return np.asanyarray(nibimage.dataobj), nibimage.affine
 
 
 # memoized factorial
