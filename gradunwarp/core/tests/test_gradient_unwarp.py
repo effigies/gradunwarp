@@ -38,5 +38,26 @@ def test_trivial_unwarp():
         unwarper.run()
         unwarper.write()
 
+        # No change
         unwarped_img = nb.load("out.nii")
+        assert np.allclose(unwarped_img.affine, img.affine)
         assert np.allclose(unwarped_img.get_fdata(), orig_arr)
+
+        # Rerun with right-handed image
+        ras_img = nb.as_closest_canonical(img)
+        ras_img.to_filename("test_ras.nii")
+        # confirm we do have affine/data flip
+        assert np.allclose(ras_img.affine, np.diag([-1, 1, 1, 1]).dot(img.affine))
+        assert np.allclose(ras_img.get_fdata(), np.flip(orig_arr, axis=0))
+
+        args.infile = "test_ras.nii"
+        args.outfile = "out_ras.nii"
+
+        unwarper = GradientUnwarpRunner(args)
+        unwarper.run()
+        unwarper.write()
+
+        # Output matches input
+        unwarped_img = nb.load("out_ras.nii")
+        assert np.allclose(unwarped_img.affine, ras_img.affine)
+        assert np.allclose(unwarped_img.get_fdata(), np.flip(orig_arr, axis=0))
