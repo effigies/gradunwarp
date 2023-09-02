@@ -38,9 +38,6 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           python-version: ${{ matrix.python-version }}
-          mamba-version: "*"
-          channels: https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/,conda-forge
-          environment-file: .github/test-env.yml
       - name: Check environment
         run: |
           which python
@@ -59,6 +56,3 @@ jobs:
       - name: Test
         run: pytest --pyargs gradunwarp --cov gradunwarp
         working-directory: /tmp
-        env:
-          FSLOUTPUTTYPE: NIFTI_GZ
-          FSLDIR: /usr/share/miniconda/envs/test
