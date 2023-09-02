@@ -80,7 +80,7 @@ jobs:
         run: pip install --upgrade pip pipx
 
       - name: Build wheel(s)
-        run: pipx run --spec "cibuildwheel>=2.15" cibuildwheel dist/*.tar.gz
+        run: pipx run cibuildwheel $( ls dist/*.tar.gz )
         env:
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
           CIBW_TEST_REQUIRES: pytest
