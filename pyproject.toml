@@ -1,11 +1,10 @@
 [build-system]
 requires = [
   "setuptools",
-  # Newer than NEP29-minimum: compile against oldest numpy available
-  "numpy==1.24; python_version >= '3.11'",
-  "numpy==1.22; python_version >= '3.10' and python_version < '3.11'",
-  # NEP29-minimum as of Jan 31, 2023
-  "numpy==1.21; python_version >= '3.7' and python_version < '3.10'",
+  # Numpy 1.25 allows back-compiling and supports 3.9
+  "numpy==1.25; python_version >= '3.9'",
+  # Last version to support 3.6-3.8
+  "numpy==1.19; python_version < '3.9'",
 ]
 build-backend = "setuptools.build_meta"
 
