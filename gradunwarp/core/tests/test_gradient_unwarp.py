@@ -61,3 +61,8 @@ def test_trivial_unwarp():
         unwarped_img = nb.load("out_ras.nii")
         assert np.allclose(unwarped_img.affine, ras_img.affine)
         assert np.allclose(unwarped_img.get_fdata(), np.flip(orig_arr, axis=0))
+
+        # Make sure we don't have open filehandles that would prevent Windows
+        # from cleaning up tmpdir
+        del unwarper
+        del img, unwarped_img, ras_img
