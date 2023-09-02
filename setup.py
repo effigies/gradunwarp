@@ -10,9 +10,9 @@ from numpy import get_include
 setup(
     ext_modules=[
         Extension(
-            f'gradunwarp.core.{mod}_ext',
+            'gradunwarp.core.{}_ext'.format(mod),
             include_dirs=[get_include()],
-            sources=[f'gradunwarp/core/{mod}_ext.c'],
+            sources=['gradunwarp/core/{}_ext.c'.format(mod)],
             extra_compile_args=['-O3'],
         )
         for mod in ('interp3', 'legendre', 'transform_coordinates')
