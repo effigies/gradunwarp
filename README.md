@@ -93,8 +93,6 @@ Dependencies of nibabel:
 
 ## Usage
 
-Note that a core component of `gradient_unwarp.py` (`unwarp_resample.py`) uses a `subprocess` call to the FSL tools `fslval` and `fslorient`. So FSL must be [installed][installed] and its configuration file correctly [sourced][sourced] (i.e., `FSLDIR` and `FSLOUTPUTTYPE` must be defined appropriately in your environment, and `${FSLDIR}/bin` must be in your `PATH` and contain `fslval`, `fslorient`, and `fslhd` -- this should be done for you by the SetUpHCPPipeline.sh script). FSLOUTPUTTYPE must be set to NIFTI\_GZ, which is the default.
-
 skeleton
 
     gradient_unwarp.py infile outfile manufacturer -g <coefficient file> [optional arguments]
@@ -202,5 +200,3 @@ To do this, after cloning the [HCP Pipelines Repository][HCP Pipelines] use:
 [sphinx]: http://sphinx-doc.org
 [Copying.md]: Copying.md
 [HCP Pipelines]: https://github.com/Washington-University/Pipelines
-[installed]: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation/Linux
-[sourced]: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation/ShellSetup
