@@ -199,17 +199,11 @@ class Unwarper(object):
         vc, vr = utils.meshgrid(np.arange(nc), np.arange(nr))
 
         # Compute transform to map the internal voxel coordinates to FSL scaled mm coordinates
-        try:
-            pixdim1=float((subprocess.Popen(['fslval', self.name,'pixdim1'], stdout=subprocess.PIPE).communicate()[0]).strip())
-        except ValueError:
-            log.error('Failure during fslval call. Make sure fslval, fslhd, fslorient are in your PATH, and that FSLOUTPUTTYPE is set.')
-            sys.exit(1)
-        
-        pixdim2=float((subprocess.Popen(['fslval', self.name,'pixdim2'], stdout=subprocess.PIPE).communicate()[0]).strip())
-        pixdim3=float((subprocess.Popen(['fslval', self.name,'pixdim3'], stdout=subprocess.PIPE).communicate()[0]).strip())
-        dim1=float((subprocess.Popen(['fslval', self.name,'dim1'], stdout=subprocess.PIPE).communicate()[0]).strip())
-        outputOrient=subprocess.Popen(['fslorient', self.name], stdout=subprocess.PIPE).communicate()[0].strip()
-        if outputOrient == b'NEUROLOGICAL':
+        img = nib.load(self.name)
+        pixdim1, pixdim2, pixdim3 = img.header.get_zooms()[:3]
+        dim1 = img.shape[0]
+
+        if np.linalg.det(img.affine[:3, :3]) > 0:
             log.info('Input volume is NEUROLOGICAL orientation. Flipping x-axis in output fullWarp_abs.nii.gz')
             # if neurological then flip x coordinate (both here in premat and later in postmat)
             m_vox2fsl = np.array([[-1.0*pixdim1, 0.0, 0.0, pixdim1*(dim1-1)],
