@@ -6,7 +6,7 @@
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
 import logging
 
-VERSION = '1.2.1+HCP'
+VERSION = '1.2.2.dev'
 
 usage = '''
 gradient_unwarp infile outfile manufacturer -g <coefficient file> [optional arguments]

@@ -13,8 +13,8 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.bumpver]
-current_version = "v1.2.2.dev"
-version_pattern = "vMAJOR.MINOR.PATCH[.TAG]"
+current_version = "1.2.2.dev"
+version_pattern = "MAJOR.MINOR.PATCH[.TAG]"
 commit_message = "bump version {old_version} -> {new_version}"
 tag_message = "{new_version}"
 tag_scope = "default"
@@ -26,11 +26,13 @@ push = false
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
-    '^version = "{version}"',
     '^current_version = "{version}"',
 ]
 "version.txt" = [
-    "^{version}",
+    "^v{version}",
+]
+"gradunwarp/core/globals.py" = [
+    "^VERSION = '{version}'"
 ]
 
 [tool.cibuildwheel]
