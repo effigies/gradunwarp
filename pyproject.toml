@@ -1,6 +1,7 @@
 [build-system]
 requires = [
   "setuptools",
+  "wheel",
   # Numpy 1.25 allows back-compiling and supports 3.9
   "numpy>=1.25; python_version >= '3.9'",
   # Last version to support 3.6-3.8
@@ -36,3 +37,22 @@ push = false
 [tool.cibuildwheel]
 # Do not bother building pypy wheels
 skip = "pp*"
+test-requires = ["pytest"]
+test-command = "pytest --pyargs gradunwarp"
+
+[tool.cibuildwheel.linux]
+repair-wheel-command = """
+auditwheel repair -w {dest_dir} {wheel}
+pipx run abi3audit --strict --report {wheel}
+"""
+
+[tool.cibuildwheel.macos]
+repair-wheel-command = """
+delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+pipx run abi3audit --strict --report {wheel}
+"""
+
+[tool.cibuildwheel.windows]
+repair-wheel-command = """
+pipx run abi3audit --strict --report {wheel}
+"""
