@@ -1,6 +1,6 @@
 """Setup gradunwarp
 
-Most configuration is now in pyproject.toml. This file configures
+Most configuration is now in setup.cfg/pyproject.toml. This file configures
 extensions and a legacy script.
 """
 from setuptools import setup, Extension
