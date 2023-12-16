@@ -87,14 +87,14 @@ static PyObject *transform_coordinates(PyObject *self, PyObject *args)
     if ( NULL == mat ) return NULL;
 
     // result matrices are the same size and float
-	Xm = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), X->dimensions, NPY_FLOAT, 0); 
-	Ym = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), X->dimensions, NPY_FLOAT, 0); 
-	Zm = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), X->dimensions, NPY_FLOAT, 0); 
+	Xm = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), PyArray_DIMS(X), NPY_FLOAT, 0);
+	Ym = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), PyArray_DIMS(X), NPY_FLOAT, 0);
+	Zm = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(X), PyArray_DIMS(X), NPY_FLOAT, 0);
   
 	// This is for reference counting ( I think )
-	PyArray_FLAGS(Xm) |= NPY_OWNDATA; 
-	PyArray_FLAGS(Ym) |= NPY_OWNDATA; 
-	PyArray_FLAGS(Zm) |= NPY_OWNDATA; 
+	PyArray_ENABLEFLAGS(Xm, NPY_ARRAY_OWNDATA);
+	PyArray_ENABLEFLAGS(Ym, NPY_ARRAY_OWNDATA);
+	PyArray_ENABLEFLAGS(Zm, NPY_ARRAY_OWNDATA);
 
 	// massive use of iterators to progress through the data
 	PyArrayIterObject *itr_x, *itr_y, *itr_z;

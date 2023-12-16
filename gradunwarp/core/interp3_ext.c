@@ -88,9 +88,9 @@ static PyObject *interp3(PyObject *self, PyObject *args)
 	if ( NULL == S ) return NULL;
 
 	// result matrix is the same size as C and is float
-	result = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(C), C->dimensions, NPY_FLOAT, 0); 
+	result = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(C), PyArray_DIMS(C), NPY_FLOAT, 0);
 	// This is for reference counting ( I think )
-	PyArray_FLAGS(result) |= NPY_OWNDATA; 
+	PyArray_ENABLEFLAGS(result, NPY_ARRAY_OWNDATA);
 
 	// massive use of iterators to progress through the data
 	PyArrayIterObject *itr_v, *itr_r, *itr_c, *itr_s;

@@ -88,9 +88,9 @@ static PyObject *legendre(PyObject *self, PyObject *args)
     }
 
 	//result matrix is the same size as x and is float
-	result = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(x), x->dimensions, NPY_FLOAT, 0); 
+	result = (PyArrayObject*) PyArray_ZEROS(PyArray_NDIM(x), PyArray_DIMS(x), NPY_FLOAT, 0);
 	// This is for reference counting ( I think )
-	PyArray_FLAGS(result) |= NPY_OWNDATA; 
+	PyArray_ENABLEFLAGS(result, NPY_ARRAY_OWNDATA);
 
     PyArrayIterObject *itr_x, *itr_r;
     int s, n;
