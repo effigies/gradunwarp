@@ -105,7 +105,7 @@ static PyObject *legendre(PyObject *self, PyObject *args)
         if ( abs(*px) > 1.0 )
         {
             printf("Error! require -1 <= x <= 1 in the legendre computation.\n");
-            printf("but got x=%f\n", x);
+            printf("but got x=%f\n", *px);
             return NULL; 
         }
 		pr = (float *) PyArray_ITER_DATA(itr_r);
