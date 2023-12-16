@@ -94,10 +94,10 @@ static PyObject *interp3(PyObject *self, PyObject *args)
 
 	// massive use of iterators to progress through the data
 	PyArrayIterObject *itr_v, *itr_r, *itr_c, *itr_s;
-    itr_v = (PyArrayIterObject *) PyArray_IterNew(result);
-    itr_r = (PyArrayIterObject *) PyArray_IterNew(R);
-    itr_c = (PyArrayIterObject *) PyArray_IterNew(C);
-    itr_s = (PyArrayIterObject *) PyArray_IterNew(S);
+    itr_v = (PyArrayIterObject *) PyArray_IterNew((PyObject*) result);
+    itr_r = (PyArrayIterObject *) PyArray_IterNew((PyObject*) R);
+    itr_c = (PyArrayIterObject *) PyArray_IterNew((PyObject*) C);
+    itr_s = (PyArrayIterObject *) PyArray_IterNew((PyObject*) S);
     pvol = (float *)PyArray_DATA(volume);
     xdim = PyArray_DIM(volume, 0);
     ydim = PyArray_DIM(volume, 1);
@@ -120,7 +120,7 @@ static PyObject *interp3(PyObject *self, PyObject *args)
 		PyArray_ITER_NEXT(itr_s);
     }
 
-	return result;
+	return (PyObject*) result;
 }
 		
 /*

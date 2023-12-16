@@ -99,12 +99,12 @@ static PyObject *transform_coordinates(PyObject *self, PyObject *args)
 	// massive use of iterators to progress through the data
 	PyArrayIterObject *itr_x, *itr_y, *itr_z;
 	PyArrayIterObject *itr_xm, *itr_ym, *itr_zm;
-    itr_x = (PyArrayIterObject *) PyArray_IterNew(X);
-    itr_y = (PyArrayIterObject *) PyArray_IterNew(Y);
-    itr_z = (PyArrayIterObject *) PyArray_IterNew(Z);
-    itr_xm = (PyArrayIterObject *) PyArray_IterNew(Xm);
-    itr_ym = (PyArrayIterObject *) PyArray_IterNew(Ym);
-    itr_zm = (PyArrayIterObject *) PyArray_IterNew(Zm);
+    itr_x = (PyArrayIterObject *) PyArray_IterNew((PyObject*) X);
+    itr_y = (PyArrayIterObject *) PyArray_IterNew((PyObject*) Y);
+    itr_z = (PyArrayIterObject *) PyArray_IterNew((PyObject*) Z);
+    itr_xm = (PyArrayIterObject *) PyArray_IterNew((PyObject*) Xm);
+    itr_ym = (PyArrayIterObject *) PyArray_IterNew((PyObject*) Ym);
+    itr_zm = (PyArrayIterObject *) PyArray_IterNew((PyObject*) Zm);
     /*m = (float *)PyArray_DATA(mat);
     printf("%f %f %f %f\n", m[0], m[1], m[2], m[3]);
     printf("%f %f %f %f\n", m[4], m[5], m[6], m[7]);

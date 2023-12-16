@@ -83,7 +83,7 @@ static PyObject *legendre(PyObject *self, PyObject *args)
     if ( mu < 0.0 || mu > nu )
     {
         printf("Error!: require legendre computation to have 0 <= mu <=nu,\n");
-        printf("but mu=%d and nu=%d\n", mu, nu);
+        printf("but mu=%ld and nu=%ld\n", mu, nu);
         return NULL; 
     }
 
@@ -96,8 +96,8 @@ static PyObject *legendre(PyObject *self, PyObject *args)
     int s, n;
     float *px, *pr, p_nu, p_nu_prev;
 
-    itr_x = (PyArrayIterObject *) PyArray_IterNew(x);
-    itr_r = (PyArrayIterObject *) PyArray_IterNew(result);
+    itr_x = (PyArrayIterObject *) PyArray_IterNew((PyObject*) x);
+    itr_r = (PyArrayIterObject *) PyArray_IterNew((PyObject*) result);
     while(PyArray_ITER_NOTDONE(itr_x)) 
     {
 		px = (float *) PyArray_ITER_DATA(itr_x);
@@ -154,7 +154,7 @@ static PyObject *legendre(PyObject *self, PyObject *args)
 		PyArray_ITER_NEXT(itr_r);
     }
 
-    return result;
+    return (PyObject*) result;
 }
 
 long odd_factorial(int k)
