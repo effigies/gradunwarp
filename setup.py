@@ -27,7 +27,10 @@ setup(
             include_dirs=[get_include()],
             sources=['gradunwarp/core/{}_ext.c'.format(mod)],
             extra_compile_args=['-O3'],
-            define_macros=[('Py_LIMITED_API', '0x03020000')],
+            define_macros=[
+                ('Py_LIMITED_API', '0x03020000'),
+                ('NPY_NO_DEPRECATED_API', 'NPY_1_7_API_VERSION'),
+            ],
             py_limited_api=True,
         )
         for mod in ('interp3', 'legendre', 'transform_coordinates')
