@@ -54,5 +54,6 @@ pipx run abi3audit --strict --report {wheel}
 
 [tool.cibuildwheel.windows]
 repair-wheel-command = """
+delvewheel repair -w {dest_dir} {wheel}
 pipx run abi3audit --strict --report {wheel}
 """
