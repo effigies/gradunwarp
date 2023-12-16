@@ -70,7 +70,6 @@ inittransform_coordinates_ext(void)
 // the data should be FLOAT32 and should be ensured in the wrapper 
 static PyObject *transform_coordinates(PyObject *self, PyObject *args)
 {
-    float *m;
     float *x, *y, *z, *xm, *ym, *zm;
     PyArrayObject *X, *Y, *Z, *mat;
     PyArrayObject *Xm, *Ym, *Zm;
