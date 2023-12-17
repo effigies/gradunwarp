@@ -96,6 +96,8 @@ static PyObject *legendre(PyObject *self, PyObject *args)
     int s, n;
     float *px, *pr, p_nu, p_nu_prev;
 
+    s = (mu & 1) ? -1 : 1;
+
     itr_x = (PyArrayIterObject *) PyArray_IterNew((PyObject*) x);
     itr_r = (PyArrayIterObject *) PyArray_IterNew((PyObject*) result);
     while(PyArray_ITER_NOTDONE(itr_x)) 
@@ -113,9 +115,6 @@ static PyObject *legendre(PyObject *self, PyObject *args)
         // Compute the initial term in the recursion
         if ( mu )
         {
-           s = 1;
-           if ( mu & 1)
-              s = -1;
               p_nu = s * odd_factorial(2 * mu - 1) * pow(sqrt( 1.0 - *px * *px), mu);
         }
         else 
