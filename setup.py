@@ -3,22 +3,16 @@
 Most configuration is now in setup.cfg/pyproject.toml. This file configures
 extensions and a legacy script.
 """
+import sys
 from setuptools import setup, Extension
 from numpy import get_include
 from wheel.bdist_wheel import bdist_wheel
 
 
 class bdist_wheel_abi3(bdist_wheel):
-    def get_tag(self):
-        python, abi, plat = super().get_tag()
-
-        # Declare support back to cp32
-        # Do not modify Python 2
-        if python.startswith('cp3'):
-            python, abi = 'cp32', 'abi3'
-
-        return python, abi, plat
-
+    def finalize_options(self):
+        self.py_limited_api = f"cp3{sys.version_info[1]}"
+        super().finalize_options()
 
 setup(
     ext_modules=[
