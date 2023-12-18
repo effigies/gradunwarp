@@ -77,9 +77,9 @@ jobs:
       - uses: pypa/cibuildwheel@v2.16.2
         env:
           # Only build CPython 3.7, because we have portable abi3 wheels.
-          # Windows arm64 is only available on 3.9 and later, Apple Silicon on
-          # 3.8 and later.
-          CIBW_BUILD: "cp37-* cp39-win_arm64 cp38-macosx_universal2"
+          # Numpy is only available for musllinux on 3.9 and later, Windows arm64
+          # on 3.9 and later, Apple Silicon on 3.8 and later.
+          CIBW_BUILD: "cp37-* cp39-musllinux* cp39-win_arm64 cp38-macosx_universal2"
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_ARCHS_MACOS: "auto universal2"
 
