@@ -60,7 +60,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        include:
+          - os: ubuntu-latest
+            platform: manylinux
+            python: cp37
+            extra: ''
+          - os: ubuntu-latest
+            platform: musllinux
+            python: cp39
+            extra: ''
+          - os: windows-latest
+            platform: win
+            python: cp37
+            extra: cp39-win_arm64
+          - os: macos-latest
+            platform: macosx
+            python: cp37
+            extra: cp38-macosx_universal2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,7 +95,7 @@ jobs:
           # Only build CPython 3.7, because we have portable abi3 wheels.
           # Numpy is only available for musllinux on 3.9 and later, Windows arm64
           # on 3.9 and later, Apple Silicon on 3.8 and later.
-          CIBW_BUILD: "cp37-* cp39-musllinux* cp39-win_arm64 cp38-macosx_universal2"
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.platform }}_* ${{ matrix.extra }}
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_ARCHS_MACOS: "auto universal2"
 
