@@ -52,35 +52,36 @@ jobs:
           path: ./dist/*.tar.gz
 
   build-wheel:
-    # Runs on tags and commits with "[build wheels]" in the message
-    name: Build wheel for ${{ matrix.python }}-${{ matrix.platform }}
+    name: Building for ${{ matrix.os }}
     needs: [job_metadata]
     runs-on: ${{ matrix.os }}
+    # Runs on tags and commits with "[build wheels]" in the message
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') || contains(needs.job_metadata.outputs.commit_message, '[build wheels]')
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-20.04
-            platform: manylinux_x86_64
-            python: cp36
-          - os: ubuntu-20.04
-            platform: musllinux_x86_64
-            python: cp311
-          - os: macos-12
-            platform: macosx_*
-            python: cp36
-          - os: windows-2019
-            platform: win_amd64
-            python: cp36
-
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          fetch-tags: true
 
-      - name: Build wheel(s)
-        uses: pypa/cibuildwheel@v2.16.2
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - uses: pypa/cibuildwheel@v2.16.2
         env:
-          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.platform }}
+          # Only build CPython 3.7, because we have portable abi3 wheels.
+          # Windows arm64 is only available on 3.9 and later, Apple Silicon on
+          # 3.8 and later.
+          CIBW_BUILD: "cp37-* cp39-win_arm64 cp38-macosx_universal2"
+          CIBW_ARCHS_LINUX: "auto aarch64"
+          CIBW_ARCHS_MACOS: "auto universal2"
 
       - uses: actions/upload-artifact@v3
         with:
