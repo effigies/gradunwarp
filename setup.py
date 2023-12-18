@@ -22,7 +22,7 @@ setup(
             sources=['gradunwarp/core/{}_ext.c'.format(mod)],
             extra_compile_args=['-O3'],
             define_macros=[
-                ('Py_LIMITED_API', '0x03020000'),
+                ('Py_LIMITED_API', f'0x03{sys.version_info[1]:02x}0000'),
                 ('NPY_NO_DEPRECATED_API', 'NPY_1_7_API_VERSION'),
             ],
             py_limited_api=True,
